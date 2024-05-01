@@ -24,7 +24,7 @@ if __name__ == '__main__':
     else:
         valid_host = '0.0.0.0'
     if port:
-        valid_port = port
+        valid_port = int(port)
     else:
         valid_port = 5000
     app.run(host=valid_host, port=valid_port, threaded=True)
