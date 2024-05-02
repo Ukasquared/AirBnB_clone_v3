@@ -13,7 +13,7 @@ def list_amenities():
     # create a list to append states
     all_amenities = []
     # return all states from storage
-    for amenities in storage.all().values():
+    for amenities in storage.all(Amenity).values():
         all_amenities.append(amenities.to_dict())
     return jsonify(all_amenities)
 

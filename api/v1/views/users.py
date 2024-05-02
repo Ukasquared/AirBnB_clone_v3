@@ -13,7 +13,7 @@ def list_users():
     # create a list to append states
     all_users = []
     # return all states from storage
-    for users in storage.all().values():
+    for users in storage.all(User).values():
         all_users.append(users.to_dict())
     return jsonify(all_users)
 
