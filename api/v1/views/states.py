@@ -45,9 +45,9 @@ def post_state():
     """ add a state to database """
     state = request.get_json(force=True, silent=True)
     if state is None:
-        abort("Not a JSON", 400)
+        abort(jsonify("Not a JSON"), 400)
     if 'name' not in state:
-        abort('Missing name', 400)
+        abort(jsonify('Missing name'), 400)
     # create new state
     new_state = State(**state)
     new_state.save()
@@ -60,7 +60,7 @@ def put_state(state_id):
     in the database """
     upd_state = request.get_json(force=True, silent=False)
     if upd_state is None:
-        abort("Not a JSON", 400)
+        abort(jsonify("Not a JSON"), 400)
     for statet_id, state in storage.all(State).items():
         id_state = statet_id.split('.')[1]
         if id_state == state_id:
