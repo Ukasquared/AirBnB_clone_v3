@@ -47,7 +47,7 @@ def post_state():
     if state is None:
         abort("Not a JSON", 400)
     if 'name' not in state:
-        abort('Missing name', 404)
+        abort('Missing name', 400)
     # create new state
     new_state = State(**state)
     new_state.save()
