@@ -3,6 +3,7 @@
 import models
 from models.base_model import BaseModel, Base
 from os import getenv
+from models.place import Place
 import sqlalchemy
 from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
@@ -22,3 +23,14 @@ class City(BaseModel, Base):
     def __init__(self, *args, **kwargs):
         """initializes city"""
         super().__init__(*args, **kwargs)
+    
+    if models.storage_t != "db":
+        @property
+        def places(self):
+            """ gets the places 
+            connected to city"""
+            places_list = []
+            for place in models.storage.all(Place).values():
+                if city.id == place.city_id:
+                    place_list.append(place)
+            return (places_list)
