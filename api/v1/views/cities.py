@@ -14,15 +14,18 @@ def list_cities(state_id):
     """ lists all the cities
     in the database """
     all_cities = []
+    found = False
     # return all states from storage
-    for statet_id, state in storage.all(State).items():
+    for statet_id in storage.all(State).keys():
         id_state = statet_id.split('.')[1]
         if id_state == state_id:
+            found = True
             for city in storage.all(City).values():
                 if city.state_id == state_id:
                     all_cities.append(city.to_dict())
-            return jsonify(all_cities)
-    abort(404)
+    if not found:
+        abort(404)
+    return jsonify(all_cities)
 
 
 @app_views.route('/cities/<city_id>', strict_slashes=False, methods=['GET'])
