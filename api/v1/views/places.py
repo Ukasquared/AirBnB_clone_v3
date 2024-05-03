@@ -8,8 +8,9 @@ from models.user import User
 from api.v1.views import app_views
 from flask import jsonify, request, abort
 
+
 @app_views.route('/cities/<city_id>/places', strict_slashes=False,
-                 methods=['GET'] )
+                 methods=['GET'])
 def list_places(city_id):
     """ lists all the places
     connected to City
@@ -31,9 +32,10 @@ def list_place_id(place_id):
     """list place associated
     with a particular id """
     place_w_id = storage.get(Place, place_id)
-    if place_w_id == None:
+    if place_w_id is None:
         abort(404, description='handle_error')
     return jsonify(place_w_id.to_dict())
+
 
 @app_views.route('places/<place_id>', strict_slashes=False,
                  methods=['DELETE'])
@@ -47,13 +49,15 @@ def delete_place(place_id):
             return (jsonify('{}'), 200)
     abort(404)
 
-@app_views.route('/cities/<city_id>/places', strict_slashes=False, methods=['POST'])
+
+@app_views.route('/cities/<city_id>/places', strict_slashes=False,
+                 methods=['POST'])
 def post_place_in_city(city_id):
     """ link place to state using
     city id """
     place = request.get_json()
     if place is None:
-       abort(400, "Not a JSON")
+        abort(400, "Not a JSON")
     city = storage.get(City, state_id)
     if city is None:
         abort(404)

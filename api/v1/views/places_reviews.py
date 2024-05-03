@@ -7,13 +7,13 @@ from models.place import Place
 from api.v1.views import app_views
 from flask import jsonify, request, abort
 
-@app_views.route('places/<place_id>/reviews', strict_slashes=False,
+
+@app_views.route('/places/<place_id>/reviews', strict_slashes=False,
                  methods=['GET'])
 def list_reviews(place_id):
     """ lists all the reviews
     connected to places
-    in
- the database """
+    in the database """
     all_reviews = []
     place = storage.get(Place, place_id)
     if place is None:
@@ -34,6 +34,7 @@ def list_review_id(review_id):
         abort(404, description='handle_error')
     return jsonify(review_w_id.to_dict())
 
+
 @app_views.route('/reviews/<review_id>', strict_slashes=False,
                  methods=['DELETE'])
 def delete_review(review_id):
@@ -45,13 +46,15 @@ def delete_review(review_id):
     storage.save()
     return (jsonify('{}'), 200)
 
-@app_views.route('/places/<place_id>/reviews', strict_slashes=False, methods=['POST'])
+
+@app_views.route('/places/<place_id>/reviews', strict_slashes=False,
+                 methods=['POST'])
 def post_review_in_place(place_id):
     """ link review to place using
     place id """
     review = request.get_json()
     if review is None:
-       abort(400, "Not a JSON")
+        abort(400, "Not a JSON")
     Place = storage.get(Place, place_id)
     if Place is None:
         abort(404)
@@ -68,13 +71,14 @@ def post_review_in_place(place_id):
     return jsonify(new_review.to_dict()), 201
 
 
-@app_views.route('/reviews/<review_id>', strict_slashes=False, methods=['PUT'])
+@app_views.route('/reviews/<review_id>', strict_slashes=False,
+                 methods=['PUT'])
 def update_review(review_id):
     """ update the review object """
     upd_review = request.get_json()
     if upd_review is None:
         abort(400, "Not a JSON")
-     review = storage.get(Review, review_id)
+    review = storage.get(Review, review_id)
     if review is None:
         abort(404)
     for key, val in upd_review.items():
