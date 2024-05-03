@@ -23,8 +23,8 @@ def list_states_id(state_id):
     """list state associated
     with a particular id """
     state_w_id = storage.get(State, state_id)
-    if state_w_id == None:
-        abort(404, description='handle_error')
+    if state_w_id is None:
+        abort(404)
     return jsonify(state_w_id.to_dict())
 
 
@@ -37,16 +37,16 @@ def delete_state(state_id):
             state.delete()
             storage.save()
             return (jsonify("{}"), 200)
-    abort(404, description='handle_error')
+    abort(404)
 
 
 @app_views.route('/states', strict_slashes=False, methods=['POST'])
 def post_state():
     """ add a state to database """
     state = request.get_json(force=True, silent=True)
-    if state == None:
+    if state is None:
         abort("Not a JSON", 400)
-    if not 'name' in state:
+    if 'name' not in state:
         abort('Missing name', 404)
     # create new state
     new_state = State(**state)
