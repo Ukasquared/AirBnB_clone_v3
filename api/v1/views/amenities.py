@@ -47,10 +47,10 @@ def post_amenity():
     """create new amenity
     object """
     amenity = request.get_json()
-    if amenity is None:
-        abort("Not a JSON", 400)
+    if not amenity:
+        abort(400, "Not a JSON")
     if 'name' not in amenity:
-        abort("Missing name", 400)
+        abort(400, "Missing name")
     new_amenity = Amenity(**amenity)
     new_amenity.save()
     return jsonify(new_amenity.to_dict()), 201
@@ -61,8 +61,8 @@ def post_amenity():
 def update_amenity(amenity_id):
     """update amenity object """
     upd_amenty = request.get_json()
-    if upd_amenty is None:
-        abort("Not a JSON", 400)
+    if not upd_amenty:
+        abort(400, "Not a JSON")
     amenity_w_id = storage.get(Amenity, amenity_id)
     if amenity_w_id is None:
         abort(404)

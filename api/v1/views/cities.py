@@ -54,11 +54,11 @@ def delete_city(city_id):
 def post_city_in_state(state_id):
     """ link city to state using
     state id """
-    city = request.get_json(force=True, silent=True)
+    city = request.get_json(silent=True)
     if city is None:
-        abort("Not a JSON", 400)
+        abort(400, "Not a JSON")
     if 'name' not in city:
-        abort("Missing name", 400)
+        abort(400, "Missing name")
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
@@ -71,9 +71,9 @@ def post_city_in_state(state_id):
 @app_views.route('/cities/<city_id>', strict_slashes=False, methods=['PUT'])
 def update_city(city_id):
     """ update the city object """
-    upd_city = request.get_json()
+    upd_city = request.get_json(silent=True)
     if upd_city is None:
-        abort("Not a JSON", 400)
+        abort(400, "Not a JSON")
     found = False
     for citie_id, city in storage.all(City).items():
         id_citie = citie_id.split('.')[1]
