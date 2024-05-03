@@ -6,7 +6,8 @@ from models.state import State
 from api.v1.views import app_views
 from flask import jsonify, request, abort
 
-@app_views.route('/states', strict_slashes=False, methods=['GET'] )
+
+@app_views.route('/states', strict_slashes=False, methods=['GET'])
 def list_states():
     """ lists all the states
     in the database """
@@ -28,7 +29,8 @@ def list_states_id(state_id):
     return jsonify(state_w_id.to_dict())
 
 
-@app_views.route('/states/<state_id>', strict_slashes=False, methods=['DELETE'])
+@app_views.route('/states/<state_id>', strict_slashes=False,
+                 methods=['DELETE'])
 def delete_state(state_id):
     """ delete state id """
     for states_key, state in storage.all(State).items():
@@ -45,9 +47,9 @@ def post_state():
     """ add a state to database """
     state = request.get_json(force=True, silent=True)
     if state is None:
-        abort(jsonify("Not a JSON"), 400)
+        abort("Not a JSON", 400)
     if 'name' not in state:
-        abort(jsonify('Missing name'), 400)
+        abort('Missing name', 400)
     # create new state
     new_state = State(**state)
     new_state.save()
@@ -60,7 +62,7 @@ def put_state(state_id):
     in the database """
     upd_state = request.get_json(force=True, silent=False)
     if upd_state is None:
-        abort(jsonify("Not a JSON"), 400)
+        abort("Not a JSON", 400)
     for statet_id, state in storage.all(State).items():
         id_state = statet_id.split('.')[1]
         if id_state == state_id:

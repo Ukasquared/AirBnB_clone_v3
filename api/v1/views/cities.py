@@ -71,15 +71,18 @@ def post_city_in_state(state_id):
 @app_views.route('/cities/<city_id>', strict_slashes=False, methods=['PUT'])
 def update_city(city_id):
     """ update the city object """
-    upd_city = request.get_json(force=True, silent=True)
+    upd_city = request.get_json()
     if upd_city is None:
         abort("Not a JSON", 400)
+    found = False
     for citie_id, city in storage.all(City).items():
         id_citie = citie_id.split('.')[1]
         if id_citie == city_id:
+            found = True
             for key, val in upd_city.items():
                 if key not in ['id', 'created_at', 'updated_at']:
                     setattr(city, key, val)
+        if found:
             city.save()
             return jsonify(city.to_dict()), 200
     return abort(404)

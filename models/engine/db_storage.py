@@ -76,7 +76,7 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        """ retrieves a specific 
+        """ retrieves a specific
         class with a specific id """
         user = None
         for user in self.__session.query(cls).\
@@ -88,7 +88,7 @@ class DBStorage:
         """ counts object in a storage """
         accum_len = 0
         obj_len = 0
-        if cls: 
+        if cls:
             clsses = self.__session.query(cls).all()
             accum_len = len(clsses)
         else:
@@ -97,5 +97,4 @@ class DBStorage:
                 clsses = self.__session.query(cls).all()
                 obj_len = len(clsses)
                 accum_len += obj_len
-        return (accum_len)
-                
+        return (accum_len) 
