@@ -46,7 +46,7 @@ def delete_amenity(amenity_id):
 def post_amenity():
     """create new amenity
     object """
-    amenity = request.get_json()
+    amenity = request.get_json(silent=True)
     if not amenity:
         abort(400, "Not a JSON")
     if 'name' not in amenity:
@@ -61,7 +61,7 @@ def post_amenity():
 def update_amenity(amenity_id):
     """update amenity object """
     upd_amenty = request.get_json()
-    if not upd_amenty:
+    if upd_amenty is None:
         abort(400, "Not a JSON")
     amenity_w_id = storage.get(Amenity, amenity_id)
     if amenity_w_id is None:

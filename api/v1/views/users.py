@@ -46,11 +46,11 @@ def post_user():
     object """
     user = request.get_json()
     if user is None:
-        abort(400, "Not a JSON", 400)
+        abort(400, "Not a JSON")
     if 'email' not in user:
         abort(400, "Missing email")
     if 'password' not in user:
-        abort("Missing password")
+        abort(400, "Missing password")
     new_user = User(**user)
     new_user.save()
     return (jsonify(new_user.to_dict()), 201)
@@ -58,7 +58,7 @@ def post_user():
 
 @app_views.route('/users/<user_id>', strict_slashes=False, methods=['PUT'])
 def update_user(user_id):
-    """update amenity object """
+    """update user object """
     upd_user = request.get_json()
     if upd_user is None:
         abort(400, "Not a JSON")
