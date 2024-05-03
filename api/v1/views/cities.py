@@ -55,11 +55,11 @@ def post_city_in_state(state_id):
     """ link city to state using
     state id """
     city = request.get_json()
-    state = storage.get(State, state_id)
-    if state.id != state_id:
-        abort(404)
     if city is None:
         abort("Not a JSON", 400)
+    state = storage.get(State, state_id)
+    if state is None:
+        abort(404)
     if 'name' not in city:
         abort("Missing name", 400)
     city['state_id'] = state_id
