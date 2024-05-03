@@ -28,16 +28,16 @@ def list_states_id(state_id):
     return jsonify(state_w_id.to_dict())
 
 
-@app_views.route('states/<state_id>', strict_slashes=False, methods=['DELETE'])
+@app_views.route('/states/<state_id>', strict_slashes=False, methods=['DELETE'])
 def delete_state(state_id):
     """ delete state id """
     for states_key, state in storage.all(State).items():
         id_state = states_key.split('.')[1]
         if id_state == state_id:
             state.delete()
-            return ("{}", 200)
-        else:
-            abort(404, description='handle_error')
+            storage.save()
+            return (jsonify("{}"), 200)
+    abort(404, description='handle_error')
 
 
 @app_views.route('/states', strict_slashes=False, methods=['POST'])
@@ -51,7 +51,7 @@ def post_state():
     # create new state
     new_state = State(**state)
     new_state.save()
-    return (new_state.to_dict(), 201)
+    return (jsonify(new_state.to_dict()), 201)
 
 
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['PUT'])
@@ -67,5 +67,6 @@ def put_state(state_id):
             for key, val in upd_state.items():
                 if key not in ['id', 'created_at', 'updated_at']:
                     setattr(state, key, val)
-            return (state.to_dict(), 200)
+            state.save()
+            return (jsonify(state.to_dict()), 200)
     return abort(404)
