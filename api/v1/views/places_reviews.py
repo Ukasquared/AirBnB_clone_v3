@@ -1,6 +1,9 @@
 #!/usr/bin/python3
 """ handles all default
-RESTFUL API actions """
+RESTFUL API actions 
+in place_amenitis module
+"""
+
 from models import storage
 from models.review import Review
 from models.place import Place
@@ -38,7 +41,8 @@ def list_review_id(review_id):
 @app_views.route('/reviews/<review_id>', strict_slashes=False,
                  methods=['DELETE'])
 def delete_review(review_id):
-    """ delete review id """
+    """ delete review id 
+    """
     place = storage.get(Review, review_id)
     if place is None:
         abort(404)

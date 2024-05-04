@@ -1,6 +1,7 @@
 #!/usr/bin/python3
-""" handles all default
+""" place module handles all default
 RESTFUL API actions """
+
 from models import storage
 from models.city import City
 from models.state import Place
