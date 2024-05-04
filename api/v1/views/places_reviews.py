@@ -1,8 +1,5 @@
 #!/usr/bin/python3
-""" handles all default
-RESTFUL API actions 
-in place_amenitis module
-"""
+""" handles all default RESTFUL API actions in place_amenitis module """
 
 from models import storage
 from models.review import Review
